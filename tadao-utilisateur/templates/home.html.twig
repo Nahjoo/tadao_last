@@ -29,5 +29,30 @@
         
     </form>
 
+    <form action="index.php" name="formulaire" method="POST">
+        <select name="city">
+            {% for route_name in routes_name %}
+            <option value="">{{ route_name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+   <table>
+   <tr>
+     <th>{{ etab_scolaire }}</th>
+   </tr>
+   <tr>
+      <td>Montée / Descente</td>
+    {% for route in routes %}
+      <td>{{ route }}</td>
+    {% endfor %}
+   </tr>
+   {% for route_name in routes_name %}
+   <tr>
+      <td>{{ route_name }}</td>
+   </tr>
+   {% endfor %}
+</table>
+
 </body>
 </html>

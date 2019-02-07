@@ -36,24 +36,32 @@ $twig = new Twig_Environment($loader, [
     $conn = DriverManager::getConnection($connectionParams, $config);
 
 
-$reponse = $conn->query("SELECT * FROM Towns WHERE Towns_name LIKE '% College %' OR Towns_name LIKE '% Lycees %' OR Towns_name LIKE '% Lycee %' ORDER BY Towns_name");
+$reponse = $conn->query("SELECT * FROM Towns WHERE Towns_name LIKE '% College %' OR Towns_name LIKE '% Lycees %' OR Towns_name LIKE '% Lycee %' GROUP BY Towns_name");
 while($req = $reponse->fetch()){
     $towns_name[] = $req['Towns_name'];
 }
 
 if($_POST){
-    $teste = $_POST["city"];
-    echo $teste; 
+    $etab_scolaire = $_POST["city"];
+    echo $etab_scolaire; 
 }
 
-$reponse = $conn->query("SELECT DISTINCT * FROM Towns INNER JOIN routestowns ON routestowns.Towns_id = Towns.id WHERE Towns.Towns_name = '$teste'");
+$reponse = $conn->query("SELECT DISTINCT * FROM Towns JOIN routestowns ON routestowns.Towns_id = Towns.id 
+WHERE Towns.Towns_name = '$etab_scolaire'");
 while($req = $reponse->fetch()){
-
     $routes[] = $req["route_id"];
+}
+
+$reponse = $conn->query("SELECT  DISTINCT * FROM Towns INNER JOIN routestowns ON routestowns.Towns_id = Towns.id INNER JOIN route ON route.route_id = routestowns.route_id WHERE Towns.Towns_name = '$etab_scolaire'");
+
+while($req = $reponse->fetch()){
+    $routes_name[] = $req["route_long_name"];
 }
 
 echo $twig->render('home.html.twig', [
     "towns_name" => $towns_name,
     "routes" => $routes,
+    "routes_name" => $routes_name,
+    "etab_scolaire" => $etab_scolaire,
         
 ]);
