@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TADAO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css" />
+    
+</head>
+<body>
+    <form action="index.php" name="formulaire" method="POST">
+        <select name="city">
+            <option>Selectionner un établissement scolaire</option>
+            {% for town_name in towns_name %}
+            <option value="{{ town_name }}">{{ town_name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="send">
+    </form>
+
+
+    <form action="index.php" name="formulaire" method="POST">
+        <select name="city">
+            {% for route in routes %}
+            <option value="">{{ route }}</option>
+            {% endfor %}
+        </select>
+        
+    </form>
+
+    <form action="index.php" name="formulaire" method="POST">
+        <select name="city">
+            {% for route_name in routes_name %}
+            <option value="">{{ route_name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+
+    <h3 class="scolaire">{{ etab_scolaire }}</h3>
+   <table>
+        <tr>
+            <td>{{ monter_descente }}</td>
+            {% for route in routes %}
+            <td>{{ route }}</td>
+            {% endfor %}
+        </tr>
+
+        {% for route_name in routes_name %}
+        <tr>
+            <td>{{ route_name }}</td>
+        </tr>
+        {% endfor %}
+</table>
+
+</body>
+</html>
