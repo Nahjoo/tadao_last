@@ -31,8 +31,8 @@
 
     <form action="index.php" name="formulaire" method="POST">
         <select name="city">
-            {% for route_name in routes_name %}
-            <option value="">{{ route_name }}</option>
+            {% for city_long_name in city_long_names %}
+            <option value="">{{ city_long_name }}</option>
             {% endfor %}
         </select>
     </form>
@@ -47,9 +47,9 @@
             {% endfor %}
         </tr>
 
-        {% for route_name in routes_name %}
+        {% for city_long_name in city_long_names %}
         <tr>
-            <td>{{ route_name }}</td>
+            <td>{{ city_long_name }}</td>
         </tr>
         {% endfor %}
 </table>

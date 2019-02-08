@@ -3,7 +3,7 @@
 // déclaration des classes PHP qui seront utilisées
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
-
+include ("../../db.config.php");
 // activation de la fonction autoloading de Composer
 require __DIR__.'/../vendor/autoload.php';
 
@@ -25,9 +25,9 @@ $twig = new Twig_Environment($loader, [
         'driver'    => 'pdo_mysql',
         'host'      => '127.0.0.1',
         'port'      => '3306',
-        'dbname'    => 'bus',
-        'user'      => 'nahjo',
-        'password'  => 'J0han62410',
+        'dbname'    =>  $dbname,
+        'user'      =>  $user,
+        'password'  =>  $password,
         'charset'   => 'utf8mb4',
     ];
     

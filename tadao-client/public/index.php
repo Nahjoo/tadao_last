@@ -3,6 +3,7 @@
 // déclaration des classes PHP qui seront utilisées
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
+include("../../db.config.php");
 
 // activation de la fonction autoloading de Composer
 require __DIR__.'/../vendor/autoload.php';
@@ -25,9 +26,9 @@ $twig = new Twig_Environment($loader, [
         'driver'    => 'pdo_mysql',
         'host'      => '127.0.0.1',
         'port'      => '3306',
-        'dbname'    => 'bus',
-        'user'      => 'nahjo',
-        'password'  => 'J0han62410',
+        'dbname'    =>  $dbname,
+        'user'      =>  $user,
+        'password'  =>  $password,
         'charset'   => 'utf8mb4',
     ];
     
@@ -52,10 +53,10 @@ while($req = $reponse->fetch()){
     $routes[] = $req["route_id"];
 }
 
-$reponse = $conn->query("SELECT  DISTINCT * FROM Towns INNER JOIN routestowns ON routestowns.Towns_id = Towns.id INNER JOIN route ON route.route_id = routestowns.route_id WHERE Towns.Towns_name = '$etab_scolaire'");
+$reponse = $conn->query("SELECT * FROM Towns INNER JOIN routestowns ON routestowns.Towns_id = Towns.id INNER JOIN route ON route.route_id = routestowns.route_id WHERE Towns.Towns_name = '$etab_scolaire' GROUP BY route_long_name");
 
 while($req = $reponse->fetch()){
-    $routes_name[] = $req["route_long_name"];
+    $city_long_names[] = $req["route_long_name"];
 }
 
 $monter_descente = "Montée / déscente";
@@ -63,7 +64,7 @@ $monter_descente = "Montée / déscente";
 echo $twig->render('home.html.twig', [
     "towns_name" => $towns_name,
     "routes" => $routes,
-    "routes_name" => $routes_name,
+    "city_long_names" => $city_long_names,
     "etab_scolaire" => $etab_scolaire,
     "monter_descente" => $monter_descente,
         
