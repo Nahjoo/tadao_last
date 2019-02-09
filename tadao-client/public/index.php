@@ -47,24 +47,48 @@ if($_POST){
     echo $etab_scolaire; 
 }
 
-$reponse = $conn->query("SELECT DISTINCT * FROM Towns JOIN routestowns ON routestowns.Towns_id = Towns.id 
-WHERE Towns.Towns_name = '$etab_scolaire'");
+
+
+// $reponse = $conn->query("SELECT * FROM Towns JOIN routestowns ON routestowns.Towns_id = Towns.id 
+// WHERE Towns.Towns_name = '$etab_scolaire'");
+// while($req = $reponse->fetch()){
+//     $tableau = array (
+//         "id" => $req["route_id"],
+//     );
+    
+// }
+
+$reponse = $conn->query("SELECT * FROM Towns INNER JOIN routestowns ON routestowns.Towns_id = Towns.id INNER JOIN route ON route.route_id = routestowns.route_id WHERE Towns.Towns_name = '$etab_scolaire' GROUP BY route_short_name");
+
 while($req = $reponse->fetch()){
-    $routes[] = $req["route_id"];
+    
+    
+    $tableau = array (
+        "id" => $req["route_id"],
+        "passages" => "",
+        "ville" => $req["route_short_name"],
+    );
+    
+    $routes[] = $tableau["id"];
+    $passages[] = $tableau["passages"];
+    $city_long_names[] = $tableau["ville"] ;
+
+    // foreach($routes as $route){
+    //     if($route == $route){
+            
+    //     }
+    //     else {
+            
+    //     }
+    // }    
 }
 
-$reponse = $conn->query("SELECT * FROM Towns INNER JOIN routestowns ON routestowns.Towns_id = Towns.id INNER JOIN route ON route.route_id = routestowns.route_id WHERE Towns.Towns_name = '$etab_scolaire' GROUP BY route_long_name");
-
-while($req = $reponse->fetch()){
-    $city_long_names[] = $req["route_long_name"];
-}
-
-$monter_descente = "Montée / déscente";
 
 echo $twig->render('home.html.twig', [
     "towns_name" => $towns_name,
     "routes" => $routes,
     "city_long_names" => $city_long_names,
+    "passages" => $passages,
     "etab_scolaire" => $etab_scolaire,
     "monter_descente" => $monter_descente,
         

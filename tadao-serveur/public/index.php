@@ -38,8 +38,9 @@ $twig = new Twig_Environment($loader, [
     $truncate = $conn->query('TRUNCATE TABLE `route`');
     $truncate = $conn->query('TRUNCATE TABLE `Towns`');
     $truncate = $conn->query('TRUNCATE TABLE `routestowns`');
+
     
-    $fp = fopen("tadao/gtf/routes.txt", "r"); 
+    $fp = fopen("tadao/gtfs/routes.txt", "r"); 
     // on saute la première ligne avec les noms de colone en la lisant pour rien
     $ligne = fgetcsv($fp);
     // On parcourt les autres lignes 
@@ -105,3 +106,4 @@ $twig = new Twig_Environment($loader, [
 echo $twig->render('home.html.twig', [
            
 ]);
+

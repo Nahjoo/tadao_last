@@ -41,7 +41,7 @@
     <h3 class="scolaire">{{ etab_scolaire }}</h3>
    <table>
         <tr>
-            <td>{{ monter_descente }}</td>
+            <td> Montée/descente </td>
             {% for route in routes %}
             <td>{{ route }}</td>
             {% endfor %}
@@ -50,9 +50,18 @@
         {% for city_long_name in city_long_names %}
         <tr>
             <td>{{ city_long_name }}</td>
+            {% for passage in passages %}
+            <td>{{ passage }}</td>
+            {% endfor %}
+        
         </tr>
         {% endfor %}
-</table>
+
+        <tr>
+            
+        </tr>
+
+    </table>
 
 </body>
 </html>
