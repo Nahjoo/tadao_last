@@ -49,15 +49,6 @@ if($_POST){
 
 
 
-// $reponse = $conn->query("SELECT * FROM Towns JOIN routestowns ON routestowns.Towns_id = Towns.id 
-// WHERE Towns.Towns_name = '$etab_scolaire'");
-// while($req = $reponse->fetch()){
-//     $tableau = array (
-//         "id" => $req["route_id"],
-//     );
-    
-// }
-
 $reponse = $conn->query("SELECT * FROM Towns INNER JOIN routestowns ON routestowns.Towns_id = Towns.id INNER JOIN route ON route.route_id = routestowns.route_id WHERE Towns.Towns_name = '$etab_scolaire' GROUP BY route_short_name");
 
 while($req = $reponse->fetch()){
@@ -65,23 +56,14 @@ while($req = $reponse->fetch()){
     
     $tableau = array (
         "id" => $req["route_id"],
-        // "passages" => "",
         "ville" => $req["route_long_name"],
     );
     
     $routes[] = $tableau["id"];
-    // $passages[] = $tableau["passages"];
-    $passages = "";
+    $check = "";
     $city_long_names[] = $tableau["ville"] ;
 
-    // foreach($routes as $route){
-    //     if($route == $route){
-            
-    //     }
-    //     else {
-            
-    //     }
-    // }    
+      
 }
 
 
@@ -89,8 +71,6 @@ echo $twig->render('home.html.twig', [
     "towns_name" => $towns_name,
     "routes" => $routes,
     "city_long_names" => $city_long_names,
-    "passages" => $passages,
+    "check" => $check,
     "etab_scolaire" => $etab_scolaire,
-    "monter_descente" => $monter_descente,
-        
 ]);
