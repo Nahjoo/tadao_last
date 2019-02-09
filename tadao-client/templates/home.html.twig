@@ -5,22 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>TADAO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css" />
     
 </head>
 <body>
-    <form action="index.php" name="formulaire" method="POST">
-        <select name="city">
-            <option>Selectionner un établissement scolaire</option>
-            {% for town_name in towns_name %}
-            <option value="{{ town_name }}">{{ town_name }}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="send">
-    </form>
+
+    <header>
+
+        <div class="image container">
+            <img src="../image/logo-tadao-couleur2018.png" alt="logo tadao">
+            <a href="#"><span>Besoin d'un conseil ?</span> 
+                <span>On vous appelle...</span>
+                <img src="../image/icon-rappel.png" alt="logo rappel"></a>
+        </div>
+
+        <div class="ligne_jaune">
+
+        </div>
+
+        <div class="menu">
+            <form action="index.php" name="formulaire" method="POST">
+                <select name="city">
+                    <option>Selectionner un établissement scolaire</option>
+                    {% for town_name in towns_name %}
+                    <option value="{{ town_name }}">{{ town_name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-warning">Confirmer</button>
+            </form>
+        </div>
+    </header>
 
 
-    <form action="index.php" name="formulaire" method="POST">
+    {# <form action="index.php" name="formulaire" method="POST">
         <select name="city">
             {% for route in routes %}
             <option value="">{{ route }}</option>
@@ -35,32 +53,37 @@
             <option value="">{{ city_long_name }}</option>
             {% endfor %}
         </select>
-    </form>
+    </form> #}
 
 
-    <h3 class="scolaire">{{ etab_scolaire }}</h3>
-   <table>
-        <tr>
-            <td> Montée/descente </td>
-            {% for route in routes %}
-            <td>{{ route }}</td>
-            {% endfor %}
-        </tr>
+    
 
-        {% for city_long_name in city_long_names %}
-        <tr>
-            <td>{{ city_long_name }}</td>
-            {% for passage in passages %}
-            <td>{{ passage }}</td>
-            {% endfor %}
+    <table class="table table-striped container">
         
-        </tr>
-        {% endfor %}
+        <thead>
+            <h4 class="title container">{{ etab_scolaire }}</h4>
+            <tr>
+                <th>Montée / Descente</th>
+            {% for route in routes %}
+            <th scope="col">Circuit {{ route }}</th>
+            {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for keyCity, city_long_name in city_long_names %}
+            <tr>
+            <th scope="row">{{ city_long_name }}</th>
+            {% for key, route in routes %}
+                {% if key == keyCity %}
+                    <th><img class="icon_bus" src="../image/image_bus.png"></th>
+                {% else %}
+                    <th>{{ passages }}</th>
+                {% endif %}
+            {% endfor %}
+            </tr>
+            {% endfor %}
 
-        <tr>
-            
-        </tr>
-
+        </tbody>
     </table>
 
 </body>

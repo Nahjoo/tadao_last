@@ -37,14 +37,14 @@ $twig = new Twig_Environment($loader, [
     $conn = DriverManager::getConnection($connectionParams, $config);
 
 
-$reponse = $conn->query("SELECT * FROM Towns WHERE Towns_name LIKE '% College %' OR Towns_name LIKE '% Lycees %' OR Towns_name LIKE '% Lycee %' GROUP BY Towns_name");
+$reponse = $conn->query("SELECT * FROM Towns WHERE Towns_name LIKE '% College %' OR Towns_name LIKE '% Lycees %' OR Towns_name LIKE '% Lycee %' OR Towns_name LIKE '% Etab. %' OR Towns_name LIKE '% Scolaires %' GROUP BY Towns_name");
 while($req = $reponse->fetch()){
     $towns_name[] = $req['Towns_name'];
 }
 
 if($_POST){
     $etab_scolaire = $_POST["city"];
-    echo $etab_scolaire; 
+    // echo $etab_scolaire;
 }
 
 
@@ -65,12 +65,13 @@ while($req = $reponse->fetch()){
     
     $tableau = array (
         "id" => $req["route_id"],
-        "passages" => "",
-        "ville" => $req["route_short_name"],
+        // "passages" => "",
+        "ville" => $req["route_long_name"],
     );
     
     $routes[] = $tableau["id"];
-    $passages[] = $tableau["passages"];
+    // $passages[] = $tableau["passages"];
+    $passages = "";
     $city_long_names[] = $tableau["ville"] ;
 
     // foreach($routes as $route){
