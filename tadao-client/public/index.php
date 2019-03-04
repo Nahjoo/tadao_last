@@ -62,7 +62,7 @@ while($req = $reponse->fetch()){
     $routes[] = $tableau["id"];
     $check = "";
     $city_long_names[] = $tableau["ville"] ;
-
+    
       
 }
 
